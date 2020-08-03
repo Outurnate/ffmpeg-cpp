@@ -2,6 +2,8 @@
 
 #include "FFmpegResource.h"
 #include "FrameSinks/VideoFrameSink.h"
+#include "VideoFormatConverter.h"
+#include "OpenCodec.h"
 
 #include <memory>
 

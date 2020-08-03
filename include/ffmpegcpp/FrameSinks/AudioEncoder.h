@@ -3,6 +3,9 @@
 #include "FFmpegResource.h"
 #include "FrameSinks/AudioFrameSink.h"
 #include "ConvertedAudioProcessor.h"
+#include "AudioFormatConverter.h"
+#include "OpenCodec.h"
+#include "Muxing/OutputStream.h"
 
 #include <memory>
 

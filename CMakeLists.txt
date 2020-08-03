@@ -11,6 +11,12 @@ source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${ffmpegcpp_files})
 
 add_library(ffmpegcpp STATIC ${ffmpegcpp_files})
 
+find_package(FFMPEG REQUIRED)
+find_package(ZLIB REQUIRED)
+
+find_library(X264 NAMES x264)
+find_library(POSTPROC NAMES postproc)
+
 set_target_properties(ffmpegcpp PROPERTIES 
     VERSION ${PROJECT_VERSION}
     PUBLIC_HEADER ${header_files}
@@ -24,18 +30,17 @@ set_target_properties(ffmpegcpp PROPERTIES
 
 target_include_directories(ffmpegcpp PRIVATE 
     include/ffmpegcpp
-    ffmpeg/include
 )
 
 target_link_libraries(ffmpegcpp
-    ${PROJECT_SOURCE_DIR}/ffmpeg/lib/avcodec.lib
-    ${PROJECT_SOURCE_DIR}/ffmpeg/lib/avdevice.lib
-    ${PROJECT_SOURCE_DIR}/ffmpeg/lib/avfilter.lib
-    ${PROJECT_SOURCE_DIR}/ffmpeg/lib/avformat.lib
-    ${PROJECT_SOURCE_DIR}/ffmpeg/lib/avutil.lib
-    ${PROJECT_SOURCE_DIR}/ffmpeg/lib/postproc.lib
-    ${PROJECT_SOURCE_DIR}/ffmpeg/lib/swresample.lib
-    ${PROJECT_SOURCE_DIR}/ffmpeg/lib/swscale.lib
+    ${FFMPEG_LIBRARIES}
+    ${X264}
+    ${POSTPROC}
+    ZLIB::ZLIB
+    va
+    va-drm
+    va-x11
+    vdpau
 )
 
 install(TARGETS ffmpegcpp
