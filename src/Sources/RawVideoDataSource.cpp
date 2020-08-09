@@ -61,10 +61,15 @@ namespace ffmpegcpp
 
 		// if the source and target pixel format are the same, we don't do any conversions, we just copy
 		// but we use sws_scale anyway because we need to convert to the internal line_size format of frame
-		swsContext = sws_getCachedContext(swsContext.get(),
+		auto newSwsContext = sws_getCachedContext(swsContext.get(),
 			frame->width, frame->height, sourcePixelFormat,
 			frame->width, frame->height, (AVPixelFormat)frame->format,
 			0, nullptr, nullptr, nullptr);
+    if (swsContext.get() != newSwsContext)
+    {
+      swsContext.release();
+      swsContext.reset(newSwsContext);
+    }
 		sws_scale(swsContext.get(), (const uint8_t * const *)&data, in_linesize, 0,
 			frame->height, frame->data, frame->linesize);
 
