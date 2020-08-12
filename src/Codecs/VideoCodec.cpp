@@ -23,10 +23,15 @@ namespace ffmpegcpp
 
 	void VideoCodec::SetQualityScale(int qscale)
 	{
-
 		codecContext->flags |= AV_CODEC_FLAG_QSCALE;
 		codecContext->global_quality = FF_QP2LAMBDA * 0;
 	}
+
+
+  void VideoCodec::SetBitRate(int64_t bitRate)
+  {
+    codecContext->bit_rate = bitRate;
+  }
 
 	bool VideoCodec::IsPixelFormatSupported(AVPixelFormat format) const
 	{

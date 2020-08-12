@@ -25,6 +25,8 @@ namespace ffmpegcpp
 		// This maps to the qscale parameter so should be in the range [0,31].
 		void SetQualityScale(int qscale);
 
+    void SetBitRate(int64_t bitRate);
+
 		bool IsPixelFormatSupported(AVPixelFormat format) const;
 		bool IsFrameRateSupported(AVRational* frameRate) const;
 
