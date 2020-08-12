@@ -7,25 +7,25 @@
 namespace ffmpegcpp
 {
 
-	RawVideoDataSource::RawVideoDataSource(int width, int height, AVPixelFormat pixelFormat, int framesPerSecond, VideoFrameSink* output)
+	RawVideoDataSource::RawVideoDataSource(int width, int height, AVPixelFormat pixelFormat, AVRational framesPerSecond, VideoFrameSink* output)
 		: RawVideoDataSource(width, height, pixelFormat, pixelFormat, framesPerSecond, output)
 	{
 
 	}
 
-	RawVideoDataSource::RawVideoDataSource(int width, int height, AVPixelFormat sourcePixelFormat, AVPixelFormat targetPixelFormat, int framesPerSecond, VideoFrameSink* output)
+	RawVideoDataSource::RawVideoDataSource(int width, int height, AVPixelFormat sourcePixelFormat, AVPixelFormat targetPixelFormat, AVRational framesPerSecond, VideoFrameSink* output)
 	{
 		Init(width, height, sourcePixelFormat, targetPixelFormat, framesPerSecond, output);
 	}
 
-	void RawVideoDataSource::Init(int width, int height, AVPixelFormat sourcePixelFormat, AVPixelFormat targetPixelFormat, int framesPerSecond, VideoFrameSink* output)
+	void RawVideoDataSource::Init(int width, int height, AVPixelFormat sourcePixelFormat, AVPixelFormat targetPixelFormat, AVRational framesPerSecond, VideoFrameSink* output)
 	{
 		this->output = output;
 		this->sourcePixelFormat = sourcePixelFormat;
 
 		// set up the time base
-		this->timeBase.num = 1;
-		this->timeBase.den = framesPerSecond;
+		this->timeBase.num = framesPerSecond.den;
+		this->timeBase.den = framesPerSecond.num;
 
 		// create the frame
 		int ret;
